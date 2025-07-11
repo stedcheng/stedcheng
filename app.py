@@ -1,10 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-
 st.set_page_config(layout = 'wide')
-
-st.write()
 
 col1, col2 = st.columns([0.8, 0.2])
 with col1:
@@ -43,7 +40,7 @@ def date_formatter(option, dates):
         formatted_dates.append(formatted)
     return formatted_dates
 
-tab1, tab2, tab3 = st.tabs(['CV', 'CoverLetterGenerator', '3'])
+tab1, tab2, tab3 = st.tabs(['CV', '2', '3'])
 
 def layout(experience_type, title, event, institution, start_date, end_date, description):
     col1, col2 = st.columns([0.8, 0.2])
@@ -174,126 +171,6 @@ with tab1:
     layout('Achievement', 'Nominee', 'Outstanding Student Research Award', 'Ateneo de Manila University - School of Science and Engineering',
            '2025-05-09', None, ('- Member of one of the 21 teams admitted to the final round of the Outstanding Student Research Award, a sub-event of the annual School of Science and Engineering Week, '
                                 'for the undergraduate thesis entitled *Bayesian Network Implementation on Nutritional Data to Predict the Nutrient Adequacy of Filipino Schoolchildren*'))
-
-
-
-with tab2:
-    import os
-    import io
-    # ✅ Register GTK DLL path (adjust if you installed GTK elsewhere)
-    gtk_path = r'C:\Program Files\GTK3-Runtime Win64\bin'
-    if os.name == 'nt' and hasattr(os, 'add_dll_directory'):
-        os.add_dll_directory(gtk_path)
-
-    from weasyprint import HTML
-
-    def generate_pdf(general_role, specific_role, institution):
-
-        html_template = f'''
-        <html>
-        <head>
-            <style>
-                @page {{
-                    size: 8.5in 11in;
-                    margin: 1in;
-                }}
-                body {{
-                    font-family: Arial, sans-serif;
-                    font-size: 12pt;
-                    line-height: 1;
-                    text-align: justify;
-                }}
-                .header {{
-                    text-align: center;
-                    margin-bottom: 20px;
-                }}
-                .name {{
-                    font-size: 16pt;
-                    font-weight: bold;
-                }}
-                .contact {{
-                    font-size: 12pt;
-                }}
-                .date {{
-                    text-align: left;
-                    margin-top: 10px;
-                    margin-bottom: 30px;
-                }}
-                a {{
-                    color: blue;
-                    text-decoration: underline;
-                }}
-            </style>
-        </head>
-        <body>
-
-            <div class='header'>
-                <div class='name'>Sted Micah T. Cheng</div>
-                <div class='contact'>Master in Data Science, Ateneo de Manila University</div>
-                <div class='contact'>BS Applied Mathematics (Data Science), Ateneo de Manila University</div>
-                <div class='contact'>
-                    9457648719 | stedmicah@gmail.com |
-                    <a href='https://www.linkedin.com/in/sted-micah-cheng/' target='_blank'>LinkedIn</a> |
-                    <a href='https://github.com/stedcheng' target='_blank'>GitHub</a>
-                </div>
-            </div>
-
-            <div class='date'>{pd.to_datetime('today').strftime('%d %B %Y')}</div>
-
-            <p>Dear Hiring Manager:</p>
-
-            <p>
-                I am Sted Micah T. Cheng, applying for the <b>{specific_role}</b> position.
-                I graduated with a BS Applied Mathematics with a specialization in Data Science and a minor in Economics from Ateneo de Manila University,
-                and I was part of 200 recipients of Ateneo's Director's List Scholarship.
-                I have taken courses in <b>data preprocessing, data visualization, business intelligence, and statistical analysis</b>, among others.
-                Aside from these, I have also expanded my horizons by joining an internship program in a financial services company,
-                where I created a dashboard in Power BI from multiple data sources to allow stakeholders to understand relationships between different variables.
-            </p>
-
-            <p>
-                My mathematical training gives me the ability to identify patterns, pinpoint problems that can be solved
-                through creating dashboards, reports, and spreadsheets, and implement their solutions.
-                In another internship, I contributed to a team that automated report generation from seminar evaluation data
-                through Python libraries for data manipulation and visualization (pandas, matplotlib, seaborn) and APIs of Google and OpenAI.
-                Additionally, while I was an undergraduate student, I identified the need for a schedule-maker for enrollment and executed this idea via Streamlit,
-                a software for web application development. I also discovered patterns for viewing course syllabi, which helped in the selection of professors and electives.
-                These projects made me develop my presentation skills as I organize my ideas and explain them to fellow students.
-            </p>
-
-            <p>
-                I foresee that in the right environment, I will be able to apply my skills to help more people and contribute to organizational objectives.
-                Thus, I consider myself a good fit for <b>{institution}</b> since I have always wanted to use my skills for something with tangible results,
-                and see how the decisions made can affect the project. This employment opportunity will allow me to gain insights from my co-workers
-                and understand how people from diverse backgrounds contribute to our overall implementation of a project.
-            </p>
-
-            <p>
-                Thank you for considering my application and feel free to contact me for any questions.
-            </p>
-
-            <p>Sincerely,<br>Sted Micah T. Cheng</p>
-        </body>
-        </html>
-        '''
-
-        # ✅ Generate PDF from HTML
-        pdf_bytes = HTML(string=html_template).write_pdf()
-
-        # ✅ Return as BytesIO for download
-        return io.BytesIO(pdf_bytes)
-
-    general_role = st.selectbox('General Role', ['Data Analyst/Business Analyst/Business Intelligence Analyst'])
-    specific_role = st.text_input('Specific Role')
-    institution = st.text_input('Institution')
-
-    st.download_button(
-        label = '📄 Download as PDF',
-        data = generate_pdf(general_role, specific_role, institution),
-        file_name = f'Sted Micah Cheng Cover Letter ({institution} - {specific_role}).pdf',
-        mime = 'application/pdf'
-    )
-
 
 
 

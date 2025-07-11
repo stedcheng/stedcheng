@@ -1,5 +1,2 @@
 streamlit
 pandas
-os
-io
-weasyprint==61.2
